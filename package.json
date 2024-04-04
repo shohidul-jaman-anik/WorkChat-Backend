@@ -1,0 +1,53 @@
+{
+  "name": "work-chat-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --fix --max-warnings=0",
+    "format": "prettier . --write"
+  },
+  "keywords": [],
+  "author": "Shohidul-Jaman-Anik",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "bcrypt": "^5.1.1",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.2",
+    "eslint": "^8.56.0",
+    "express": "^4.18.3",
+    "express-rate-limit": "^7.2.0",
+    "form-data": "^4.0.0",
+    "fuzzy-search": "^3.2.1",
+    "googleapis": "^131.0.0",
+    "helmet": "^7.1.0",
+    "http": "^0.0.1-security",
+    "http-status": "^1.7.3",
+    "jsonwebtoken": "^9.0.2",
+    "mailgen": "^2.0.28",
+    "mailgun.js": "^10.2.1",
+    "mongoose": "^8.1.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.8",
+    "otp-generator": "^4.0.1",
+    "socket.io": "^4.7.4",
+    "stripe": "^14.13.0",
+    "toobusy-js": "^0.5.1",
+    "validator": "^13.11.0",
+    "winston": "^3.11.0",
+    "winston-daily-rotate-file": "^4.7.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.2.4"
+  }
+}

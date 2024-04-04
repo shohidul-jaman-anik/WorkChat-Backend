@@ -6,7 +6,6 @@ const limiter = require('../../middlewares/rateLimit/authLimiter')
 
 
 router.route('/register').post(limiter.authLimiter, authController.register)// Register user
-router.route('/registerlandlord').post(limiter.authLimiter, authController.sellerRegistration)// Register seller
 router.route('/register/confirmation/:token').get(authController.confirmEmail)// verify mail
 
 
@@ -16,7 +15,7 @@ router.route('/login').post(limiter.authLimiter, authController.login) // login 
 
 
 router.route('/allUser').get(authController.getAllUsers) // get all user 
-router.route('/user/:email').get(authController.getUser) // user with email 
+router.route('/user/:id').get(authController.getUser) // user with email 
 // router.route('/generateOTP').get(Auth.localVariables, authController.generateOTP) // generate random OTP 
 // router.route('/verifyOTP').get(authController.verifyOTP) // verify generate OTP
 router.route('/createResetSession').get(authController.crateResetSession) // reset all the variable

@@ -12,7 +12,7 @@ const {
   sendMailForRegisterWithGmail,
 } = require('../../middlewares/sendEmail/verifyRegisterEmail');
 const config = require('../../../../config');
-const {  sendMailWithMailGun } = require('../../middlewares/sendEmail/sendMailWithMailGun');
+const { sendMailWithMailGun } = require('../../middlewares/sendEmail/sendMailWithMailGun');
 // const { sendMailWithGmail } = require("../../middlewares/sendEmail/verifyRegisterEmail");
 
 const verifyUser = async (req, res, next) => {
@@ -154,72 +154,6 @@ const register = async (req, res, next) => {
   }
 };
 
-const sellerRegistration = async (req, res, next) => {
-  try {
-    const { username, password, email, profile, gender, mobile } = req.body;
-
-    const existingEmail = await UserModel.findOne({ email });
-    if (existingEmail) {
-      return res.status(httpStatus.CONFLICT).send({ error: 'Email already exists!' });
-    }
-
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      const user = await UserModel.create({
-        username,
-        email,
-        seller: false,
-        password: hashedPassword,
-        profile: profile || '',
-        gender,
-        mobile,
-      });
-      try {
-        const token = user.generateConfirmationToken();
-        await user.save({ validateBeforeSave: false });
-
-        const mailData = {
-          to: email,
-          subject: 'Verify your Account',
-          text: `<div style="font-family: 'Arial', sans-serif; padding: 20px; background-color: #f4f4f4;">
-              <div style="max-width: 600px;  background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                <h2 style="color: #333333;">Email Verification</h2>
-                <p style="color: #666666;">Dear user,</p>
-                <p style="color: #666666;">Thank you for signing up on commerce! To complete your registration, please click the link below to verify your email address:</p>
-                
-                <p style="color: #666666; margin-bottom: 20px;">
-                   <a 
-                     href="${config.confirm_reg_email}/${token}" 
-                     style="color: #007BFF; text-decoration: none;">Verify Email Address
-                   </a>
-                </p>
-
-                <p style="color: #666666;">If you didn't sign up for our service, you can ignore this email.</p>
-              </div>
-              <p style="color: #999999; margin-top: 20px;">This email was sent by Commerce.</p>
-            </div>`,
-        };
-
-        await sendMailForRegisterWithGmail(mailData);
-        // await sendMailWithMailGun(mailData);
-
-        return res.status(201).json({
-          status: httpStatus.CREATED,
-          message: 'Registration successful. Please verify your email.',
-        });
-      } catch (error) {
-        return res.status(500).json({
-          status: 'Fail',
-          message: "Couldn't register Successfully",
-          error: error.message,
-        });
-      }
-    }
-  } catch (error) {
-    return res.status(500).send(error);
-  }
-};
 
 const login = async (req, res, next) => {
   // console.log(req.body, 'data login');
@@ -265,14 +199,14 @@ const login = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
   try {
-    const userEmail = req.params?.email;
-    // console.log(userEmail, 'userEmail');
+    const { id } = req.params;
+    console.log(id, 'id id id');
 
-    if (!userEmail) {
-      return res.status(501).send({ error: 'Invalid Email' });
+    if (!id) {
+      return res.status(501).send({ error: 'Invalid User' });
     }
 
-    const user = await UserModel.findOne({ email: userEmail });
+    const user = await UserModel.findOne({ _id: id });
 
     if (!user) {
       return res.status(501).send({ error: "Couldn't Find the User" });
@@ -281,7 +215,7 @@ const getUser = async (req, res, next) => {
     // Remove password from user
     const { password, ...rest } = Object.assign({}, user.toJSON());
 
-    return res.status(201).send(rest);
+    return res.status(200).send(rest);
   } catch (error) {
     console.error(error); // Log the error for debugging purposes
     return res.status(404).send({ error: 'Cannot Find User Data' });
@@ -454,7 +388,6 @@ module.exports.authController = {
   verifyAdmin,
   verifySeller,
   register,
-  sellerRegistration,
   login,
   confirmEmail,
   getUser,

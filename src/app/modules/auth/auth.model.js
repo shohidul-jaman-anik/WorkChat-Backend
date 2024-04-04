@@ -25,7 +25,6 @@ const UserSchema = new mongoose.Schema({
     },
     default: 'unauthorized',
   },
-  seller: { type: Boolean, default: false },
   mobile: { type: Number },
   address: { type: String },
   gender: {
@@ -35,24 +34,6 @@ const UserSchema = new mongoose.Schema({
     },
   },
   profile: { type: String },
-  task: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Task',
-    },
-  ],
-  wishlist: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Property',
-    },
-  ],
-  contract: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Contract',
-    },
-  ],
   confirmationToken: String,
   confirmationTokenExpires: Date,
 });

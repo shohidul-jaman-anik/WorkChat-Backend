@@ -10,6 +10,8 @@ const chatRoute = require('../../app/modules/chat/chat.route');
 const messageRoute = require('../../app/modules/message/message.route');
 const notificationRoute = require('../../app/modules/notification/notification.route');
 const adminWebInfoRoute = require('../../app/modules/adminWebInfo/adminWebInfo.route');
+const taskRoute = require('../../app/modules/task/task.route');
+const noteRoute = require('../../app/modules/notes/notes.route');
 
 
 
@@ -47,6 +49,14 @@ const moduleRoutes = [
   {
     path: '/adminWebInfo',
     route: adminWebInfoRoute,
+  },
+  {
+    path: '/task',
+    route: taskRoute,
+  },
+  {
+    path: '/note',
+    route: noteRoute,
   },
 ];
 

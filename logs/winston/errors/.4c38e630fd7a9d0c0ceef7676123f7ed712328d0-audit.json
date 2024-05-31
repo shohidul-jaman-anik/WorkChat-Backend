@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Fiverr\\WorkChat\\WorkChat Backend\\logs\\winston\\errors\\.4c38e630fd7a9d0c0ceef7676123f7ed712328d0-audit.json",
+    "files": [
+        {
+            "date": 1717156693011,
+            "name": "C:\\Fiverr\\WorkChat\\WorkChat Backend\\logs\\winston\\errors\\RH-2024-05-31-17-error.log",
+            "hash": "45e8d02502926564bed22fe5fcd5dd2552fe4a7f7bb20a69fc32cb96a35f1f7c"
+        }
+    ],
+    "hashType": "sha256"
+}

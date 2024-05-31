@@ -12,6 +12,7 @@ const config = require('./config');
 const globalErrorHandler = require('./src/app/middlewares/globalErrorHandler/globalErrorHandler');
 const helmet = require("helmet");
 const toobusy = require('toobusy-js');
+const { logger } = require('./src/shared/logger');
 
 
 // Middleware
@@ -71,9 +72,12 @@ app.use(function (req, res, next) {
 
 mongoose
   .connect(config.database_local)
-  .then(() => console.log('Database connection successfully'.red.bold))
+  .then(() => {
+    //  console.log('Database connection successfully'.red.bold)
+    logger.info('Database connection successfully')
+  })
   .catch(err => {
-    console.log('Error connecting to the database:', err);
+    logger.error('Error connecting to the database:', err);
     process.exit(1); // Exit the application on database connection error
   });
 
@@ -85,7 +89,8 @@ app.use(globalErrorHandler);
 const port = config.port || 8080;
 
 app.listen(port, () => {
-  console.log(`App is running on port ${port}`.yellow.bold);
+  // console.log(`App is running on port ${port}`.yellow.bold);
+  logger.info(`App is running on port ${port}`);
 });
 
 app.get('/', (req, res) => {

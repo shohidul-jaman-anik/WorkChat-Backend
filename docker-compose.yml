@@ -1,6 +1,4 @@
-version: "3.9"
-
-
+version: '3.9'
 
 networks:
   elk-stack:
@@ -11,6 +9,25 @@ networks:
         - subnet: 172.1.1.0/24
 
 services:
+  # Node.js Express App
+  node-app:
+    build: .
+    container_name: inso-backend
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MONGO_URI=mongodb://mongo:27017/your_database_name
+    ports:
+      - '5000:5000'
+    networks:
+      - elk-stack
+    depends_on:
+      - elasticsearch
+      - redis
+      - mongo
+
   # Elastic Search
   elasticsearch:
     image: elasticsearch:7.9.2
@@ -19,11 +36,11 @@ services:
     networks:
       - elk-stack
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - '9200:9200'
+      - '9300:9300'
     environment:
-      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
-      - "discovery.type=single-node"
+      - 'ES_JAVA_OPTS=-Xms1024m -Xmx1024m'
+      - 'discovery.type=single-node'
 
   # Kibana
   kibana:
@@ -35,8 +52,49 @@ services:
     networks:
       - elk-stack
     ports:
-      - "5601:5601"
+      - '5601:5601'
     environment:
-      - "ELASTICSEARCH_URL=http://elasticsearch:9200"
+      - 'ELASTICSEARCH_URL=http://elasticsearch:9200'
+
+  # Livekit
+  livekit:
+    image: livekit/livekit-server:latest
+    container_name: livekit-server
+    ports:
+      - '7880:7880' # HTTP port
+      - '7881:7881' # WebSocket port
+      - '5349:5349' # TURN server (TLS)
+    volumes:
+      - ./livekit.yaml:/livekit.yaml
+    command:
+      - --config /livekit.yaml
+    networks:
+      - elk-stack
+
+  # Redis
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    networks:
+      - elk-stack
+
+  # MongoDB
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - elk-stack
+
+volumes:
+  mongo_data:
+
 
 

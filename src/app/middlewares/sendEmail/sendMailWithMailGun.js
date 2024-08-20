@@ -1,21 +1,30 @@
-// const mailgun = require("mailgun.js");
-// const DOMAIN = "sandbox09963a2277214188b8d129bbc5d10ecb.mailgun.org";
-// const mg = mailgun({ apiKey: "<PRIVATE_API_KEY>", domain: DOMAIN });
+const formData = require('form-data');
+const Mailgun = require('mailgun.js');
+const config = require('../../../../config');
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({
+  username: 'api',
+  key: `${config.mailgun?.mailgun_key}`,
+});
 
-// module.exports.sendMailWithMailGun = async (mailData) => {
-//     const mail = {
-//         from: "Mailgun Sandbox <postmaster@sandbox09963a2277214188b8d129bbc5d10ecb.mailgun.org>",
-//         to: mailData.to,
-//         subject: mailData.subject,
-//         text: mailData.text
-//     };
+module.exports.sendMailWithMailGun = async mailData => {
+  const { sub, message, userEmail } = mailData;
 
-//     try {
-//         const result = await mg.messages.create(DOMAIN, mail);
-//         console.log(result);
-//         return result; // Optionally, you can return the result
-//     } catch (error) {
-//         console.error(error);
-//         throw error;
-//     }
-// };
+  return new Promise((resolve, reject) => {
+    mg.messages
+      .create(config.mailgun?.mailgun_domain, {
+        from: config.mailgun?.mailgun_from,
+        to: userEmail,
+        subject: sub,
+        html: message,
+      })
+      .then(msg => {
+        console.log(msg); // logs response data
+        resolve(msg);
+      })
+      .catch(err => {
+        console.error(err); // logs any error
+        reject(err);
+      });
+  });
+};

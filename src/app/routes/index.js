@@ -12,7 +12,7 @@ const notificationRoute = require('../../app/modules/notification/notification.r
 const adminWebInfoRoute = require('../../app/modules/adminWebInfo/adminWebInfo.route');
 const taskRoute = require('../../app/modules/task/task.route');
 const noteRoute = require('../../app/modules/notes/notes.route');
-
+const streamingRoute = require('../../app/modules/streaming/streaming.route');
 
 
 const moduleRoutes = [
@@ -57,6 +57,10 @@ const moduleRoutes = [
   {
     path: '/note',
     route: noteRoute,
+  },
+  {
+    path: '/streaming',
+    route: streamingRoute,
   },
 ];
 

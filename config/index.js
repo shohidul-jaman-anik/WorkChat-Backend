@@ -18,6 +18,7 @@ module.exports = {
   confirm_reg_email: process.env.CONFIRM_REG_EMAIL,
   api_key: process.env.API_KEY,
   bg_check_base_url: process.env.BG_CHECK_BASE_URL,
+  auth_key_for_iphone: process.env.AUTH_KEY_FOR_IPHONE,
   mailgun: {
     mailgun_domain: process.env.MAILGUN_DOMAIN,
     mailgun_key: process.env.MAILGUN_KEY,

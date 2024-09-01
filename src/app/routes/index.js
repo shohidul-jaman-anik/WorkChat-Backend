@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-
 const authRoute = require('../../app/modules/auth/auth.route');
 const adminRoute = require('../../app/modules/admin/admin.route');
 const forumRoute = require('../../app/modules/forum/forum.route');
@@ -13,7 +12,7 @@ const adminWebInfoRoute = require('../../app/modules/adminWebInfo/adminWebInfo.r
 const taskRoute = require('../../app/modules/task/task.route');
 const noteRoute = require('../../app/modules/notes/notes.route');
 const streamingRoute = require('../../app/modules/streaming/streaming.route');
-
+const othersRoute = require('../../app/modules/others/others.route');
 
 const moduleRoutes = [
   {
@@ -61,6 +60,10 @@ const moduleRoutes = [
   {
     path: '/streaming',
     route: streamingRoute,
+  },
+  {
+    path: '/others',
+    route: othersRoute,
   },
 ];
 
